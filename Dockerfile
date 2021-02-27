@@ -3,7 +3,7 @@ FROM alpine
 ENV KUBE_LATEST_VERSION="v1.20.4"
 ENV HELM_LATEST_VERSION="v3.5.2"
 
-RUN set -x && apk add --update ca-certificates jq curl bash git net-tools
+RUN set -x && apk add --update ca-certificates jq curl bash git net-tools coreutils
 
 SHELL ["/bin/bash", "-c" ]
 
@@ -26,6 +26,7 @@ RUN set -x \
 
 RUN helm version
 RUN kubectl version --client=true
+RUN cp --version
 
 SHELL ["/bin/bash"]
 
