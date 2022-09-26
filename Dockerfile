@@ -30,6 +30,8 @@ RUN helm version
 RUN kubectl version --client=true
 RUN cp --version
 RUN aws --version
+RUN which aws
+RUN which kubectl
 
 SHELL ["/bin/bash"]
 
