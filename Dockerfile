@@ -1,11 +1,13 @@
 FROM alpine
 
-ENV KUBE_LATEST_VERSION="v1.20.4"
-ENV HELM_LATEST_VERSION="v3.5.2"
+ENV KUBE_LATEST_VERSION="v1.22.15"
+ENV HELM_LATEST_VERSION="v3.10.0"
 
-RUN set -x && apk add --update ca-certificates jq curl bash git net-tools coreutils
+RUN set -x && apk add --update ca-certificates jq curl bash git net-tools coreutils python3 py3-pip
 
 SHELL ["/bin/bash", "-c" ]
+
+RUN python3 -m pip install awscli
 
 RUN set -x \
  && { [[ "$(arch)" == "x86_86" ]] && export CURRENT_ARCH="amd64" || export CURRENT_ARCH="arm64" ; } \
@@ -19,7 +21,7 @@ RUN set -x \
  && tar -xvf helm-${HELM_LATEST_VERSION}-linux-${CURRENT_ARCH}.tar.gz \
  && mv linux-${CURRENT_ARCH}/helm /usr/local/bin \
  && rm -rf /helm-${HELM_LATEST_VERSION}-linux-${CURRENT_ARCH}.tar.gz linux-${CURRENT_ARCH} \
-
+    
 #RUN set -x \
  && rm -rf /root/.cache /root/.gem \
  && rm /var/cache/apk/*
@@ -27,6 +29,7 @@ RUN set -x \
 RUN helm version
 RUN kubectl version --client=true
 RUN cp --version
+RUN aws --version
 
 SHELL ["/bin/bash"]
 
