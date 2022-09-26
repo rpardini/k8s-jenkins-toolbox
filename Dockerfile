@@ -3,7 +3,7 @@ FROM alpine
 ENV KUBE_LATEST_VERSION="v1.22.15"
 ENV HELM_LATEST_VERSION="v3.10.0"
 
-RUN set -x && apk add --update ca-certificates jq curl bash git net-tools coreutils python3 py3-pip
+RUN set -x && apk add --update ca-certificates jq curl bash git net-tools coreutils python3 py3-pip groff
 
 SHELL ["/bin/bash", "-c" ]
 
